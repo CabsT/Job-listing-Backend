@@ -1,0 +1,5 @@
+CREATE USER "Gontse-mosh"  WITH PASSWORD 'Girlcode123';
+GRANT ALL PRIVILEGES ON DATABASE "Job_Listing" TO "Gontse-mosh";
+
+CREATE USER "Emeldah9"  WITH PASSWORD 'Girlcode123';
+GRANT ALL PRIVILEGES ON DATABASE "Job_Listing" TO "Emeldah9";
