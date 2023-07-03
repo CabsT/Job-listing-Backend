@@ -12,8 +12,8 @@ def main():
     return "Job Listing HomePage"
 
 #Route and function to render the 'Job Form' -> In progress
-@app.route('/joblist/add')
+@app.route('/add-job')
 def add_job():
-    return "Job Added/Job Form"
+    return "Job Form"
 
 
