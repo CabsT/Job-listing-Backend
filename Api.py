@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 #Import the db class from the db.py file 
 from db import db
@@ -14,8 +14,23 @@ def main():
     return "Job Listing HomePage"
 
 #Route and function to render the 'Job Form' -> In progress
-@app.route('/add-job')
+@app.route('/add-job', methods=['POST'])
 def add_job():
-    return "Job Form"
+    if request.method == 'POST':
+        content_type = request.headers.get('Content-Type')
+        if content_type != 'application/json':
+            return ({'message': 'Unsupported Media Type'}),415
+
+        job_data = request.json
+        db_instance = db('jobs')
+        db_instance.insert(job_data)
+        return ({'message': 'Job submitted successfully!'}),200
+
+
+@app.route('/jobs')
+def get_jobs():
+    db_instance = db('jobs')
+    job_data = db_instance.select()
+    return (job_data)
 
 
