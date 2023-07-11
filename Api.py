@@ -32,11 +32,3 @@ def get_jobs():
     db_instance = db('jobs')
     job_data = db_instance.select()
     return (job_data)
-
-
-@app.route('/jobs')
-def get_jobs():
-    db_instance = db('jobs')
-    job_data = db_instance.select()
-    return (job_data)
-
