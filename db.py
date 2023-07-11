@@ -7,28 +7,35 @@ conn_pool = pool.SimpleConnectionPool(
     1, 80,
     database=os.getenv('DB_NAME'),
     host=os.getenv('DB_HOST'),
-    port=os.getenv('DB_POST'),
+    port=os.getenv('DB_PORT'),
     user=os.getenv('DB_USER'),
     password=os.getenv('DB_PASS')
 )
 
-# initializes the connection pool and defines a db class with an __init__ method and a select method.
 class db:
     def __init__(self, table):
         self.table = table
         self.pool = conn_pool
-# a connection is obtained from the connection pool using self.pool.getconn(),
-# a cursor is created on the obtained connection using conn.cursor().
+
     def select(self):
         conn = self.pool.getconn()
         cursor = conn.cursor()
-#The SELECT query is executed using cursor.execute()
-        cursor.execute(f"SELECT*FROM {self.table}")
 
-#The rows returned by the query are fetched using cursor.fetchall() and stored in the rows variable.
-        rows = cursor.fetchall()
+        query = f"SELECT * FROM {self.table}"
+        cursor.execute(query)
+        job_data = cursor.fetchall()
 
-        return rows
+        self.pool.putconn(conn)
 
+        return job_data
 
+    def insert(self, data):
+        conn = self.pool.getconn()
+        cursor = conn.cursor()
 
+        keys = ', '.join(data.keys())
+        placeholders = ', '.join(['%s'] * len(data))
+        query = f"INSERT INTO {self.table} ({keys}) VALUES ({placeholders})"
+        cursor.execute(query, tuple(data.values()))
+        conn.commit()
+        self.pool.putconn(conn)
