@@ -6,3 +6,6 @@ CREATE TABLE jobs (
   employmentstatus TEXT,
   location VARCHAR(255),
   contact VARCHAR(255)
+);
+	
+	

@@ -39,4 +39,5 @@ class db:
         cursor.execute(query, tuple(data.values()))
         conn.commit()
 
-       
+      
+  
