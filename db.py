@@ -16,6 +16,18 @@ class db:
     def __init__(self, table):
         self.table = table
         self.pool = conn_pool
+
+    def select(self):
+        conn = self.pool.getconn()
+        cursor = conn.cursor()
+
+        query = f"SELECT * FROM {self.table}"
+        cursor.execute(query)
+        job_data = cursor.fetchall()
+
+        self.pool.putconn(conn)
+
+        return job_data
     
     def insert(self, data):
         conn = self.pool.getconn()
@@ -27,4 +39,5 @@ class db:
         cursor.execute(query, tuple(data.values()))
         conn.commit()
 
-       
+      
+  
