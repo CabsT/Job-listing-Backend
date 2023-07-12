@@ -13,8 +13,17 @@ CORS(app)  # Allow Cross-Origin Resource Sharing
 def main():
     return "Job Listing HomePage"
 
-@app.route('/jobs')
-def get_jobs():
-    db_instance = db('jobs')
-    job_data = db_instance.select()
-    return (job_data)
+@app.route('/add-job', methods=['POST'])
+def add_job():
+    if request.method == 'POST':
+        content_type = request.headers.get('Content-Type')
+        if content_type != 'application/json':
+            return {'message': 'Unsupported Media Type'}, 415
+
+        job_data = request.json
+        # Process the job_data and save it to the database or perform any required operations
+
+        return {'message': 'Job submitted successfully!'}, 200
+
+if __name__ == '__main__':
+    app.run()
