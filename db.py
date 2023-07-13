@@ -4,7 +4,7 @@ import os
 from psycopg2 import pool
 
 # Set the environment variables
-os.environ['DB_NAME'] = 'job_listing'
+os.environ['DB_NAME'] = 'Job_Listing'
 os.environ['DB_HOST'] = 'localhost'
 os.environ['DB_PORT'] = '5432'
 os.environ['DB_USER'] = 'postgres'

@@ -1,6 +1,7 @@
 CREATE TABLE jobs (
     id SERIAL PRIMARY KEY,
     jobtitle VARCHAR(255),
+    companyname VARCHAR(255);
     description TEXT,
     qualification VARCHAR(255),
     employmentstatus VARCHAR(255),
