@@ -33,16 +33,39 @@ def get_jobs():
             job = {
                 'id': row[0],
                 'jobtitle': row[1],
-                'description': row[2],
-                'qualification': row[3],
-                'employmentstatus': row[4],
-                'location': row[5],
-                'contact': row[6]
+                'companyname': row[2],
+                'description': row[3],
+                'qualification': row[4],
+                'employmentstatus': row[5],
+                'location': row[6],
+                'contact': row[7],
+                'closingdate': row[8]
             }
             jobs.append(job)
 
         
     return ({'jobs': jobs})
+
+
+
+@app.route('/jobs/<int:id>', methods=['GET'])
+def get_job_details(id):
+    job_data = db_instance.get_job_by_id(id)
+    if job_data:
+        job = {
+            'id': job_data[0],
+            'jobtitle': job_data[1],
+            'companyname': job_data[2],
+            'description': job_data[3],
+            'qualification': job_data[4],
+            'employmentstatus': job_data[5],
+            'location': job_data[6],
+            'contact': job_data[7],
+            'closingdate': job_data[8]
+        }
+        return (job)
+    else:
+        return ({'error': 'Job not found'})
         
 
 if __name__ == '__main__':

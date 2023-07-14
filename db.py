@@ -39,5 +39,19 @@ class db:
         cursor.execute(query, tuple(data.values()))
         conn.commit()
 
+
+
+    def get_job_by_id(self, id):
+        conn = self.pool.getconn()
+        cursor = conn.cursor()
+
+        query = f"SELECT * FROM {self.table} WHERE id = %s"
+        cursor.execute(query, (id,))
+        job_data = cursor.fetchone()
+
+        self.pool.putconn(conn)
+
+        return job_data if job_data else None
+
       
   
