@@ -33,11 +33,13 @@ def get_jobs():
             job = {
                 'id': row[0],
                 'jobtitle': row[1],
-                'description': row[2],
-                'qualification': row[3],
-                'employmentstatus': row[4],
-                'location': row[5],
-                'contact': row[6]
+                'companyname': row[2],
+                'description': row[3],
+                'qualification': row[4],
+                'employmentstatus': row[5],
+                'location': row[6],
+                'contact': row[7],
+                'closingdate': row[8]
             }
             jobs.append(job)
 
