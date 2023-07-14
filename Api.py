@@ -45,6 +45,27 @@ def get_jobs():
 
         
     return ({'jobs': jobs})
+
+
+
+@app.route('/jobs/<int:id>', methods=['GET'])
+def get_job_details(id):
+    job_data = db_instance.get_job_by_id(id)
+    if job_data:
+        job = {
+            'id': job_data[0],
+            'jobtitle': job_data[1],
+            'companyname': job_data[2],
+            'description': job_data[3],
+            'qualification': job_data[4],
+            'employmentstatus': job_data[5],
+            'location': job_data[6],
+            'contact': job_data[7],
+            'closingdate': job_data[8]
+        }
+        return (job)
+    else:
+        return ({'error': 'Job not found'})
         
 
 if __name__ == '__main__':
