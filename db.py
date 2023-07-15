@@ -2,6 +2,7 @@
 import os
 #The psycopg2 module provides a pool submodule that allows you to create and manage a connection pool for PostgreSQL database.
 from psycopg2 import pool
+import psycopg2
 
 conn_pool = pool.SimpleConnectionPool(
     1, 80,
@@ -52,6 +53,17 @@ class db:
         self.pool.putconn(conn)
 
         return job_data if job_data else None
+    
+    
+    def insert_application(self, application_data):
+        conn = self.pool.getconn()
+        cursor = conn.cursor()
 
-      
+        keys = ', '.join(application_data.keys())
+        placeholders = ', '.join(['%s'] * len(application_data))
+        query = f"INSERT INTO job_applications ({keys}) VALUES ({placeholders})"
+        cursor.execute(query, tuple(application_data.values()))
+        conn.commit()
+
+        self.pool.putconn(conn)
   
