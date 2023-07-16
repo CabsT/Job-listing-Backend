@@ -1,11 +1,8 @@
-CREATE TABLE jobs (
+CREATE TABLE job_applications (
   id SERIAL PRIMARY KEY,
-  jobtitle VARCHAR(255),
-  companyname TEXT,
-  description TEXT,
-  qualification TEXT,
-  employmentstatus TEXT,
-  location VARCHAR(255),
-  contact VARCHAR(255),
-  closingdate VARCHAR(255)
+  jobId INTEGER,
+  full_name VARCHAR(255) ,
+  email VARCHAR(255),
+  cover_letter VARCHAR(3000),
+  cv_file BYTEA
 );
