@@ -81,10 +81,10 @@ def apply_for_job(id):
       
         application_data = {
             'jobId': id,
-            'full_name': application_data.get('full_name'),
+            'fullName': application_data.get('fullName'),
             'email': application_data.get('email'),
-            'cover_letter': application_data.get('cover_letter'),
-            'cv_file': application_data.get('cv_file')
+            'coverLetter': application_data.get('coverLetter'),
+            'cvFile': application_data.get('cvFile')
             
         }
 
