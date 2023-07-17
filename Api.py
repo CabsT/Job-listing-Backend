@@ -65,28 +65,34 @@ def get_job_details(id):
             'contact': job_data[7],
             'closingdate': job_data[8]
         }
-        return (job)
+
+        response = (job)
+        response.mimetype = 'application/json'  # Set the desired MIME type
+        return response
     else:
-        return ({'error': 'Job not found'})
+        return {'error': 'Job not found'}
     
 @app.route('/jobs/<int:id>/apply', methods=['POST'])
 def apply_for_job(id):
     if request.method == 'POST':
         content_type = request.headers.get('Content-Type')
+        accept_header = request.headers.get('Accept')
         if content_type != 'application/json':
             return {'message': 'Unsupported Media Type'}
 
         application_data = request.json
 
-      
-        application_data = {
-            'jobId': id,
-            'fullName': application_data.get('fullName'),
-            'email': application_data.get('email'),
-            'coverLetter': application_data.get('coverLetter'),
-            'cvFile': application_data.get('cvFile')
-            
-        }
+        # Handle different MIME types based on the Accept header
+        if accept_header == 'application/json':
+            # Handle JSON data
+            application_data = {
+                'jobId': id,
+                'fullName': application_data.get('fullName'),
+                'email': application_data.get('email'),
+                'coverLetter': application_data.get('coverLetter'),
+                'cvFile': application_data.get('cvFile')
+            }
+        
 
         db_job_applications.insert_application(application_data)
         return {'message': 'Application submitted successfully'}
