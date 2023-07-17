@@ -9,7 +9,7 @@ CREATE TABLE job_applications (
 
 CREATE TABLE jobs (
   id SERIAL PRIMARY KEY,
-  jobtitle VARCHAR(255),,
+  jobtitle VARCHAR(255),
   companyname TEXT, 
   description TEXT ,
   qualification TEXT,
