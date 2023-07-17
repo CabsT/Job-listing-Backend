@@ -10,10 +10,10 @@ CREATE TABLE job_applications (
 CREATE TABLE jobs (
   id SERIAL PRIMARY KEY,
   jobtitle VARCHAR(255),
-  companyname TEXT, 
+  companyname VARCHAR(255), 
   description TEXT ,
-  qualification TEXT,
-  employmentstatus TEXT,
+  qualification VARCHAR(255),
+  employmentstatus VARCHAR(255),
   location VARCHAR(255),
   contact VARCHAR(255),
   closingdate VARCHAR(255)
