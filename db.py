@@ -2,7 +2,7 @@
 import os
 #The psycopg2 module provides a pool submodule that allows you to create and manage a connection pool for PostgreSQL database.
 from psycopg2 import pool
-import psycopg2
+
 
 # Set the environment variables
 os.environ['DB_NAME'] = 'Job_Listing'
@@ -10,7 +10,6 @@ os.environ['DB_HOST'] = 'localhost'
 os.environ['DB_PORT'] = '5432'
 os.environ['DB_USER'] = 'postgres'
 os.environ['DB_PASS'] = 'Gontse99'
-
 
 conn_pool = pool.SimpleConnectionPool(
     1, 80,
@@ -74,3 +73,4 @@ class db:
         conn.commit()
 
         self.pool.putconn(conn)
+  
