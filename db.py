@@ -2,7 +2,7 @@
 import os
 #The psycopg2 module provides a pool submodule that allows you to create and manage a connection pool for PostgreSQL database.
 from psycopg2 import pool
-import psycopg2
+
 
 conn_pool = pool.SimpleConnectionPool(
     1, 80,
