@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, make_response
 from flask_cors import CORS
 #Import the db class from the db.py file 
 from db import db
@@ -12,9 +12,11 @@ db_jobs = db('jobs')
 db_job_applications = db('job_applications')
 
 
+
 @app.route('/')
 def main():
     return "Job Listing HomePage"
+
 
 @app.route('/add-job', methods=['POST'])
 def add_job():
@@ -27,27 +29,26 @@ def add_job():
     db_jobs.insert(job_data)
     return {'message': 'Job submitted successfully!'}
 
+
 @app.route('/jobs', methods=['GET'])
 def get_jobs():
     job_data = db_jobs.select()
     jobs = []
     for row in job_data:
-            job = {
-                'id': row[0],
-                'jobtitle': row[1],
-                'companyname': row[2],
-                'description': row[3],
-                'qualification': row[4],
-                'employmentstatus': row[5],
-                'location': row[6],
-                'contact': row[7],
-                'closingdate': row[8]
-            }
-            jobs.append(job)
+        job = {
+            'id': row[0],
+            'jobtitle': row[1],
+            'companyname': row[2],
+            'description': row[3],
+            'qualification': row[4],
+            'employmentstatus': row[5],
+            'location': row[6],
+            'contact': row[7],
+            'closingdate': row[8]
+        }
+        jobs.append(job)
 
-        
-    return ({'jobs': jobs})
-
+    return {'jobs': jobs}
 
 
 @app.route('/jobs/<int:id>', methods=['GET'])
@@ -65,10 +66,14 @@ def get_job_details(id):
             'contact': job_data[7],
             'closingdate': job_data[8]
         }
-        return (job)
+
+        response = make_response(job)
+        response.mimetype = 'application/json'
+        return response
     else:
-        return ({'error': 'Job not found'})
-    
+        return {'error': 'Job not found'}
+
+
 @app.route('/jobs/<int:id>/apply', methods=['POST'])
 def apply_for_job(id):
     if request.method == 'POST':
@@ -78,22 +83,19 @@ def apply_for_job(id):
 
         application_data = request.json
 
-      
-        application_data = {
-            'jobId': id,
-            'fullName': application_data.get('fullName'),
-            'email': application_data.get('email'),
-            'coverLetter': application_data.get('coverLetter'),
-            'cvFile': application_data.get('cvFile')
-            
-        }
-
+        accept_header = request.headers.get('Accept')
+        if accept_header == 'application/json':
+            application_data = {
+                'jobId': id,
+                'fullName': application_data.get('fullName'),
+                'email': application_data.get('email'),
+                'coverLetter': application_data.get('coverLetter'),
+                'cvFile': application_data.get('cvFile')
+            }
+        
         db_job_applications.insert_application(application_data)
         return {'message': 'Application submitted successfully'}
 
-        
 
 if __name__ == '__main__':
     app.run()
-
-        
